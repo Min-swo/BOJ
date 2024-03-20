@@ -25,11 +25,11 @@ jobs: # 실제 실행될 내용
         python update.py
     - name: Commit changes # 3) 추가된 파일 commit
       run: |
-        git config --global user.name 'Min-swo' # 유저명
-        git config --global user.email 'msms0226@g.skku.edu' # 유저 이메일
-        git remote set-url origin https://github.com/Min-swo/BOJ_Stusy.git
-        git add -A
-        git commit -am "auto update README.md" || true# 커밋 메시지
+        git config user.name "Min-swo"
+        git config user.email "msms0226@g.skku.edu"
+        git add .
+        git commit -m "auto update README.md"
+        git push https://${{ secrets.GH_TOKEN }}@github.com/Min-swo/BOJ_Study.git
     - name: Push changes # 4) 메인에 푸시
       run: |
         git push
