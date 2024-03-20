@@ -30,6 +30,3 @@ jobs: # 실제 실행될 내용
         git add .
         git commit -m "auto update README.md"
         git push https://${{ secrets.GH_TOKEN }}@github.com/Min-swo/Baekjoon_Solved.git
-    - name: Push changes # 4) 메인에 푸시
-      run: |
-        git push
