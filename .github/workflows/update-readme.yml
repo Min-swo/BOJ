@@ -27,6 +27,7 @@ jobs: # 실제 실행될 내용
       run: |
         git config --global user.name 'Min-swo' # 유저명
         git config --global user.email 'msms0226@g.skku.edu' # 유저 이메일
+        git remote set-url origin https://Min-swo@github.com/BOJ_Study/BOJ_Study.git
         git add -A
         git commit -am "auto update README.md" || true# 커밋 메시지
     - name: Push changes # 4) 메인에 푸시
