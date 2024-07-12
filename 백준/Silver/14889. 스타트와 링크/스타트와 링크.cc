@@ -5,48 +5,38 @@ using namespace std;
 int n;
 int** stat;
 int minVal = 100 * 20 * 20;
-int* member;
+vector<int> v1;
+vector<int> v2;
 
-int getMin(int a, int b)
+void dfs(int idx)
 {
-    if(a < b)
-        return a;
-    return b;
-}
-
-int getSumDiff(int* memeber)
-{
-    int sum1 = 0;
-    int sum2 = 0;
-    for(int i = 0; i < n-1; i++)
+    if(idx == n)
     {
-        for(int j = i+1; j < n; j++)
-        {
-            if(member[i] && member[j])
-                sum1 += (stat[i][j] + stat[j][i]);
-            else if(!member[i] && !member[j])
-                sum2 += (stat[i][j] + stat[j][i]);
-        }
-    }
+        int sum1 = 0; int sum2 = 0;
 
-    if(sum1 > sum2)
-        return sum1 - sum2;
-    return sum2 - sum1;
-}
+        for(int i : v1)
+            for(int j : v1)
+                sum1 += stat[i][j];
 
-void dfs(int depth, int* memeber, int num)
-{
-    if(depth == n/2)
-    {   
-        minVal = getMin(minVal, getSumDiff(member));
+        for(int i : v2)
+            for(int j : v2)
+                sum2 += stat[i][j];
+
+        minVal = min(minVal, abs(sum1 - sum2));
         return;
     }
 
-    for(int i = num; i < n; i++)
+    if(v1.size() < n/2)
     {
-        member[i] = 1;
-        dfs(depth+1, member, i+1);
-        member[i] = 0;
+        v1.push_back(idx);
+        dfs(idx+1);
+        v1.pop_back();
+    }
+    if(v2.size() < n/2)
+    {
+        v2.push_back(idx);
+        dfs(idx+1);
+        v2.pop_back();
     }
     
 }
@@ -69,8 +59,7 @@ int main(void)
             cin >> stat[i][j];
     }
 
-    member = new int[n];
-    dfs(0, member, 0);
+    dfs(0);
     cout << minVal << "\n";
 
     return 0;
