@@ -51,11 +51,16 @@ void dfs(int depth, int x, int y, int sum, int flag)
                 }
             }
         }
+
+        for(int i = 0; i < 4; i++)
+        {
+            if(isSafe(x + dX[i], y + dY[i]))
+            {
+                maxVal = max(maxVal, sum + score[x + dX[i]][y + dY[i]]);
+            }
+        }
         visited[x][y] = false;
-    }
-    if(depth == 4)
-    {
-        maxVal = max(maxVal, sum);
+
         return;
     }
 
