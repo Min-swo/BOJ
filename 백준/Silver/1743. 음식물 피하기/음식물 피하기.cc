@@ -43,7 +43,6 @@ bool isSafe(int x, int y) {
 
 int bfs(pair<int, int> start) {
   int cnt = 0;
-
   visited[start.first][start.second] = true;
   q.push(start);
   while(!q.empty()) {
