@@ -1,12 +1,12 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 using namespace std;
 
-int maxVal = -1;
-int cnt = 0;
+bool map[101][101];
+bool visited[101][101];
 
-int map[101][101];
-int visited[101][101];
+queue<pair<int, int>> q;
 vector<pair<int, int>> targets;
 
 int dX[4] = {1, 0, -1, 0};
@@ -17,8 +17,8 @@ int N, M, K;
 void init() {
   for(int i = 1; i <= N; i++) {
     for(int j = 1; j <= M; j++) {
-      map[i][j] = 0;
-      visited[i][j] = 0;
+      map[i][j] = false;
+      visited[i][j] = false;
     }
   }
 
@@ -26,7 +26,7 @@ void init() {
     int x, y;
     cin >> x >> y;
     targets.push_back({x, y});
-    map[x][y] = 1;
+    map[x][y] = true;
   }
 }
 
@@ -41,37 +41,29 @@ bool isSafe(int x, int y) {
   return true;
 }
 
-void dfs(int x, int y) {
-  visited[x][y] = 1;
-  cnt += 1;
-  for(int i = 0; i < 4; i++) {
-    int newX = x + dX[i];
-    int newY = y + dY[i];
+int bfs(pair<int, int> start) {
+  int cnt = 0;
 
-    if(isSafe(newX, newY)) {
-      dfs(newX, newY);
+  visited[start.first][start.second] = true;
+  q.push(start);
+  while(!q.empty()) {
+    cnt += 1;
+
+    int x = q.front().first;
+    int y = q.front().second;
+    q.pop();
+
+    for(int i = 0; i < 4; i++) {
+      int newX = x + dX[i];
+      int newY = y + dY[i];
+
+      if(isSafe(newX, newY)) {
+        visited[newX][newY] = true;
+        q.push({newX, newY});
+      }
     }
   }
-
-  if(maxVal < cnt)
-    maxVal = cnt;
-}
-
-// void printMap() {
-//   for(int i = 1; i <= N; i++) {
-//     for(int j = 1; j <= M; j++) {
-//       cout << map[i][j] << " ";
-//     }
-//     cout << "\n";
-//   }
-// }
-
-void resetVisited() {
-  for(int i = 1; i <= N; i++) {
-    for(int j = 1; j <= M; j++) {
-      visited[i][j] = 0;
-    }
-  }
+  return cnt;
 }
 
 int main(void) {
@@ -79,10 +71,14 @@ int main(void) {
 
   init();
 
-  for(int i = 0; i < targets.size(); i++) {
-    dfs(targets[i].first, targets[i].second);
-    cnt = 0;
-    resetVisited();
+  int maxVal = -1;
+  for(int i = 0; i < int(targets.size()); i++) {
+    if(!visited[targets[i].first][targets[i].second]) {
+      int tmp = bfs(targets[i]);
+      if(maxVal < tmp) {
+        maxVal = tmp;
+      }
+    }
   }
 
   cout << maxVal << "\n";
