@@ -12,6 +12,10 @@ vector<long> treeHeights;
 bool compare(long a, long b) { return a > b; }
 
 int main(void) {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
     cin >> N >> M;
     for (long i = 0; i < N; i++) {
         long tmpHeight;
