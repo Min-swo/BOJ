@@ -32,4 +32,4 @@ jobs: # 실제 실행될 내용
         git config user.email "msms0226@g.skku.edu"
         git add .
         git commit -m "auto update README.md"
-        git push https://${{ secrets.GH_TOKEN }}@github.com/Min-swo/BOJ.git
+        git push https://${{ secrets.GH_TOKEN }}@github.com/Min-swo/Baekjoon_Solved.git
