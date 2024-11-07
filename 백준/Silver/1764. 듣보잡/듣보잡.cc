@@ -1,36 +1,36 @@
 #include <algorithm>
 #include <iostream>
-#include <map>
 #include <vector>
 using namespace std;
 
 int N, M;
-map<string, bool> m;
-vector<string> dup;
+string tmp;
+vector<string> before;
+vector<string> result;
 int main(void) {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
     cin >> N >> M;
+
     for (int i = 0; i < N; i++) {
-        string tmp;
         cin >> tmp;
-        m.insert({tmp, true});
+        before.push_back(tmp);
     }
+    sort(before.begin(), before.end());
 
     for (int i = 0; i < M; i++) {
-        string tmp;
         cin >> tmp;
-        if (m.find(tmp) != m.end()) {
-            dup.push_back(tmp);
+        if (binary_search(before.begin(), before.end(), tmp)) {
+            result.push_back(tmp);
         }
     }
 
-    sort(dup.begin(), dup.end());
-    cout << dup.size() << "\n";
-    for (string name : dup) {
-        cout << name << "\n";
+    sort(result.begin(), result.end());
+    cout << result.size() << "\n";
+    for (string r : result) {
+        cout << r << "\n";
     }
     return 0;
 }
