@@ -74,17 +74,6 @@ int main(void) {
         node[child].parent.push_back(parent);
     }
 
-    // for (int i = 1; i <= N; i++) {
-    //     cout << "\n" << i << "'s Parent: \n";
-    //     for (int idx : node[i].parent) {
-    //         cout << idx << "\n";
-    //     }
-    //     cout << "\n" << i << "'s Child: \n";
-    //     for (int idx : node[i].child) {
-    //         cout << idx << "\n";
-    //     }
-    // }
-
     cout << bfs(A, B) << "\n";
     return 0;
 }
