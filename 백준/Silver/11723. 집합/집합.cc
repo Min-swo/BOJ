@@ -2,77 +2,71 @@
 using namespace std;
 
 int M;
-int set[21];
-
-int check(int data) { return set[data]; }
+int set = 0;
 
 void add(int data) {
-    if (check(data)) {
-        return;
-    }
-
-    set[data] = 1;
+    int flag = 1 << (data - 1);
+    set = set | flag;
 }
 
 void remove(int data) {
-    if (!check(data)) {
-        return;
-    }
-
-    set[data] = 0;
+    int flag = ~(1 << (data - 1));
+    set = set & flag;
 }
 
-void toggle(int data) { set[data] = !set[data]; }
+void check(int data) {
+    int flag = 1 << (data - 1);
+    if ((set & flag) == flag) {
+        cout << "1\n";
+    } else {
+        cout << "0\n";
+    }
+}
+
+void toggle(int data) {
+    int flag = 1 << (data - 1);
+    set = set ^ flag;
+}
 
 void all() {
-    for (int i = 1; i < 21; i++) {
-        set[i] = 1;
-    }
+    int flag = ~0;
+    set = set | flag;
 }
 
-void empty() {
-    for (int i = 1; i < 21; i++) {
-        set[i] = 0;
-    }
-}
-
-void commander(string cmd) {
-    int data;
-    if (cmd == "add") {
-        cin >> data;
-        add(data);
-    } else if (cmd == "remove") {
-        cin >> data;
-        remove(data);
-    } else if (cmd == "check") {
-        cin >> data;
-        cout << check(data) << "\n";
-    } else if (cmd == "toggle") {
-        cin >> data;
-        toggle(data);
-    } else if (cmd == "all") {
-        all();
-    } else if (cmd == "empty") {
-        empty();
-    } else {
-        cout << "Unexpected Cmd\n";
-    }
-}
+void empty() { set = 0; }
 
 int main(void) {
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    for (int i = 1; i < 21; i++) {
-        set[i] = 0;
-    }
     cin >> M;
 
     string cmd;
+    int data;
     for (int i = 0; i < M; i++) {
         cin >> cmd;
-        commander(cmd);
+
+        if (cmd == "add") {
+            cin >> data;
+            add(data);
+        } else if (cmd == "remove") {
+            cin >> data;
+            remove(data);
+        } else if (cmd == "check") {
+            cin >> data;
+            check(data);
+        } else if (cmd == "toggle") {
+            cin >> data;
+            toggle(data);
+        } else if (cmd == "all") {
+            all();
+        } else if (cmd == "empty") {
+            empty();
+        } else {
+            cout << "Error\n";
+        }
     }
+
     return 0;
 }
