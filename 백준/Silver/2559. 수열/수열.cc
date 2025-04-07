@@ -17,22 +17,20 @@ int main(void) {
         cin >> arr[i];
     }
 
-    int max = 0;
+    int maxValue = 0;
     int pSum = 0;
     for (int i = 0; i < K; i++) {
         pSum += arr[i];
     }
 
-    max = pSum;
+    maxValue = pSum;
     for (int i = 0; i < N - K; i++) {
         pSum -= arr[i];
         pSum += arr[i + K];
 
-        if (max < pSum) {
-            max = pSum;
-        }
+        maxValue = max(maxValue, pSum);
     }
 
-    cout << max << "\n";
+    cout << maxValue << "\n";
     return 0;
 }
