@@ -1,0 +1,8 @@
+-- 코드를 입력하세요
+# SELECT COUNT(*) USERS FROM USER_INFO
+#     WHERE YEAR(JOINED) = "2021"
+#         and (AGE BETWEEN 20 and 29);
+        
+SELECT COUNT(*) USERS FROM USER_INFO
+    WHERE DATE(JOINED) >= "2021-01-01" and DATE(JOINED) <= "2021-12-31"
+        and (AGE BETWEEN 20 and 29);        
