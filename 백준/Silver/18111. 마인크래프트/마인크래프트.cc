@@ -11,7 +11,7 @@ bool cmp(const pii &a, const pii &b) {
 
 #define MAX 501
 int N, M, B;
-int map[MAX * MAX];
+int freq[257];
 
 int minH = 257;
 int maxH = -1;
@@ -22,9 +22,11 @@ int main(void) {
 
     cin >> N >> M >> B;
     for (int i = 0; i < N * M; i++) {
-        cin >> map[i];
-        minH = min(minH, map[i]);
-        maxH = max(maxH, map[i]);
+        int h;
+        cin >> h;
+        freq[h]++;
+        minH = min(minH, h);
+        maxH = max(maxH, h);
     }
 
     pii minVal = {N * M * maxH * 2, 0};
@@ -32,12 +34,16 @@ int main(void) {
         int del = 0;
         int put = 0;
 
-        for (int i = 0; i < N * M; i++) {
-            int diff = map[i] - h;
+        for (int i = 0; i <= 256; i++) {
+            if (freq[i] == 0) {
+                continue;
+            }
+
+            int diff = i - h;
             if (diff > 0) {
-                del = del + diff;
+                del = del + diff * freq[i];
             } else {
-                put = put + diff * -1;
+                put = put + diff * -1 * freq[i];
             }
         }
         if (B + del >= put) {
