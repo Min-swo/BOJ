@@ -1,0 +1,10 @@
+-- 코드를 입력하세요
+SELECT A.USER_ID, A.NICKNAME, B.PRICE AS TOTAL_SALES
+    FROM USED_GOODS_USER A
+    RIGHT JOIN (SELECT WRITER_ID, SUM(PRICE) AS PRICE
+                FROM USED_GOODS_BOARD
+                    WHERE STATUS = 'DONE'
+                        GROUP BY WRITER_ID
+                            HAVING SUM(PRICE) >= 700000) B
+    ON B.WRITER_ID = A.USER_ID
+        ORDER BY TOTAL_SALES
