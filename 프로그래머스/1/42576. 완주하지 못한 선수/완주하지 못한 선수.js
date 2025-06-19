@@ -1,15 +1,16 @@
 function solution(participant, completion) {
-    const map = {};
-    for(const name of participant) {
-        map[name] = (map[name] ?? 0) + 1;
-    }
-   
-    for(const name of completion) {
-        map[name]--;
-    }
+    const m = new Map();
     
-    for(const key in map) {
-        if(map[key] != 0) {
+    participant.forEach((name) => {
+        m.set(name, (m.get(name) ?? 0) + 1)
+    })
+   
+    completion.forEach((name) => {
+        m.set(name, m.get(name) - 1)
+    })
+    
+    for(const [key, val] of m) {
+        if(val != 0) {
             return key;
         }
     }
