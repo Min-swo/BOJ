@@ -1,5 +1,10 @@
 -- 코드를 입력하세요
-SELECT user_id, product_id FROM ONLINE_SALE
-    GROUP BY user_id, product_id
-    HAVING COUNT(*) >= 2     
-        ORDER BY user_id ASC, product_id DESC;
+WITH SAME AS (
+    SELECT USER_ID, PRODUCT_ID, COUNT(USER_ID) AS `COUNT` FROM ONLINE_SALE os
+        GROUP BY USER_ID, PRODUCT_ID
+)
+
+SELECT USER_ID, PRODUCT_ID FROM SAME s
+    WHERE s.COUNT > 1
+        ORDER BY USER_ID, PRODUCT_ID DESC
+
