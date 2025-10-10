@@ -1,19 +1,13 @@
--- 코드를 작성해주세요
-# SELECT ID, CASE
-#                 WHEN NTILE(4) OVER (ORDER BY SIZE_OF_COLONY DESC) = 1 THEN 'CRITICAL'
-#                 WHEN NTILE(4) OVER (ORDER BY SIZE_OF_COLONY DESC) = 2 THEN 'HIGH'
-#                 WHEN NTILE(4) OVER (ORDER BY SIZE_OF_COLONY DESC) = 3 THEN 'MEDIUM'
-#                 ELSE 'LOW'
-#             END AS COLONY_NAME
-#     FROM ECOLI_DATA
-#         ORDER BY ID;
+WITH SIZE_TILE AS (
+SELECT ID, NTILE(4) OVER (ORDER BY SIZE_OF_COLONY DESC) AS PER FROM ECOLI_DATA
+)
 
-SELECT ID, CASE
-                WHEN e.QUARTILE = 1 THEN 'CRITICAL'
-                WHEN e.QUARTILE = 2 THEN 'HIGH'
-                WHEN e.QUARTILE = 3 THEN 'MEDIUM'
-                ELSE 'LOW'
-            END AS COLONY_NAME 
-FROM (SELECT ID, NTILE(4) OVER (ORDER BY SIZE_OF_COLONY DESC) AS QUARTILE 
-            FROM ECOLI_DATA) e
-ORDER BY ID;
+SELECT ID, CASE PER
+                            WHEN 1 THEN 'CRITICAL'
+                            WHEN 2 THEN 'HIGH'
+                            WHEN 3 THEN 'MEDIUM'
+                            WHEN 4 THEN 'LOW'
+                            ELSE 'ERROR'
+                            END AS COLONY_NAME
+    FROM SIZE_TILE
+        ORDER BY ID
